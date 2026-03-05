@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import MainLayout from '../layouts/MainLayout';
 import Button from '../components/Button';
 import { useNavigate } from 'react-router-dom';
-import { openai } from '../lib/openai';
+import { generateHabits } from '../services/ai';
 import { supabase } from '../lib/supabase';
 
 export default function CreateHabitAI() {
@@ -27,56 +27,7 @@ export default function CreateHabitAI() {
         setLoading(true);
 
         try {
-            const systemPrompt = `Actúa como un experto en cambio de hábitos basado en ciencia del comportamiento.
-
-Un usuario te va a escribir un mal hábito que tiene.
-Tu tarea es generar UN solo hábito alternativo que ayude a reemplazar ese mal hábito.
-
-IMPORTANTE:
-- Debes ceñirte ÚNICAMENTE a la información explícita que proporciona el usuario.
-- No asumas causas, motivos ni contextos que el usuario no haya mencionado.
-- Si la causa del mal hábito no está clara, trabaja sobre el síntoma observable, no sobre una causa hipotética.
-
-El hábito debe ser:
-- concreto
-- diario
-- fácil de empezar
-- medible
-- realista
-- aplicable desde el primer día
-
-El hábito NO debe ser un consejo genérico ni típico de aplicaciones de hábitos.
-Prioriza uno de estos enfoques (elige solo uno):
-- crear fricción al mal hábito
-- un hábito mínimo que rompa la inercia
-- un gesto simbólico que refuerce identidad
-
-Además, incluye un dato claro, impactante y comprensible que muestre qué ocurre si la persona NO cambia ese hábito a medio o largo plazo.
-El dato debe:
-- basarse únicamente en el hábito descrito por el usuario
-- no introducir causas nuevas
-- no ser alarmista
-- ayudar a tomar conciencia
-
-Devuelve la respuesta EXCLUSIVAMENTE en formato JSON con la siguiente estructura (todo en español):
-{
-    "title": "Nombre del hábito (corto y potente)",
-    "dailyAction": "Qué hacer cada día (acción concreta, fácil de empezar)",
-    "duration": "Duración recomendada (ej: 21 días)",
-    "consequence": "Qué ocurre si no cambias este hábito (dato impactante y realista)",
-    "tip": "Consejo práctico (máximo 15 palabras)"
-}`;
-
-            const response = await openai.chat.completions.create({
-                model: "gpt-3.5-turbo",
-                messages: [
-                    { role: "system", content: systemPrompt },
-                    { role: "user", content: prompt }
-                ],
-                response_format: { type: "json_object" }
-            });
-
-            const result = JSON.parse(response.choices[0].message.content);
+            const result = await generateHabits(prompt);
             setGeneratedHabits([result]);
         } catch (err) {
             console.error("Error generating habit:", err);
