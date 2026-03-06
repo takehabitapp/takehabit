@@ -79,8 +79,8 @@ const MainLayout = ({ children }) => {
                             </div>
 
                             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                                <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)', cursor: 'not-allowed', padding: '0.5rem 0' }}>Políticas de Privacidad</div>
-                                <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)', cursor: 'not-allowed', padding: '0.5rem 0' }}>Términos y Condiciones</div>
+                                <Link to="/privacy-policy" style={{ fontSize: '0.8rem', color: 'var(--text-muted)', textDecoration: 'none', padding: '0.5rem 0' }} onClick={() => setShowProfile(false)}>Políticas de Privacidad</Link>
+                                <Link to="/terms-and-conditions" style={{ fontSize: '0.8rem', color: 'var(--text-muted)', textDecoration: 'none', padding: '0.5rem 0' }} onClick={() => setShowProfile(false)}>Términos y Condiciones</Link>
                             </div>
 
                             <button

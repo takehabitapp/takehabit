@@ -114,11 +114,15 @@ export default function Landing() {
                 bottom: '2rem',
                 color: 'var(--text-muted)',
                 fontSize: '0.75rem',
-                opacity: 0.4,
-                letterSpacing: '0.2em',
-                textTransform: 'uppercase'
+                opacity: 0.6,
+                letterSpacing: '0.1em',
+                textTransform: 'uppercase',
+                display: 'flex',
+                gap: '2rem'
             }}>
-                MANTÉN LA RACHA
+                <Link to="/privacy-policy" style={{ color: 'inherit', textDecoration: 'none' }}>Privacidad</Link>
+                <Link to="/terms-and-conditions" style={{ color: 'inherit', textDecoration: 'none' }}>Términos</Link>
+                <span>MANTÉN LA RACHA</span>
             </footer>
         </div>
     );
