@@ -35,7 +35,14 @@ export default function Register() {
             // Si quieres que entren directo, hay que configurar Supabase (Auto Confirm).
             // Por ahora, asumimos que se registra y lo mandamos al siguiente paso.
             if (data.user) {
-                navigate('/create-habit');
+                localStorage.setItem('takehabit_email', data.user.email);
+                // Si el registro devuelve sesión (confirmación desactivada o ya logueado)
+                if (data.session) {
+                    navigate('/create-habit');
+                } else {
+                    // Si requiere confirmación de email
+                    setError('Cuenta creada. Revisa tu email para confirmarla antes de entrar.');
+                }
             }
         } catch (err) {
             setError(err.message || 'Error al crear la cuenta');

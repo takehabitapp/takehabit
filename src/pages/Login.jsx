@@ -29,7 +29,14 @@ export default function Login() {
                 navigate('/dashboard');
             }
         } catch (err) {
-            setError('Email o contraseña incorrectos. Si no tienes cuenta, debes registrarte.');
+            console.error('Error de login:', err);
+            if (err.message === 'Email not confirmed') {
+                setError('Debes confirmar tu email antes de entrar. Revisa tu bandeja de entrada.');
+            } else if (err.message === 'Invalid login credentials') {
+                setError('Email o contraseña incorrectos.');
+            } else {
+                setError(err.message || 'Error al iniciar sesión.');
+            }
         } finally {
             setLoading(false);
         }
