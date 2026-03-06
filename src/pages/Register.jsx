@@ -36,13 +36,9 @@ export default function Register() {
             // Por ahora, asumimos que se registra y lo mandamos al siguiente paso.
             if (data.user) {
                 localStorage.setItem('takehabit_email', data.user.email);
-                // Si el registro devuelve sesión (confirmación desactivada o ya logueado)
-                if (data.session) {
-                    navigate('/create-habit');
-                } else {
-                    // Si requiere confirmación de email
-                    setError('Cuenta creada. Revisa tu email para confirmarla antes de entrar.');
-                }
+                // Si el registro fue exitoso, intentamos ir al dashboard
+                // (Si Supabase está configurado con Auto Confirm, data.session existirá)
+                navigate('/dashboard');
             }
         } catch (err) {
             setError(err.message || 'Error al crear la cuenta');

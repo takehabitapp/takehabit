@@ -30,13 +30,7 @@ export default function Login() {
             }
         } catch (err) {
             console.error('Error de login:', err);
-            if (err.message === 'Email not confirmed') {
-                setError('Debes confirmar tu email antes de entrar. Revisa tu bandeja de entrada.');
-            } else if (err.message === 'Invalid login credentials') {
-                setError('Email o contraseña incorrectos.');
-            } else {
-                setError(err.message || 'Error al iniciar sesión.');
-            }
+            setError('Email o contraseña incorrectos.');
         } finally {
             setLoading(false);
         }
