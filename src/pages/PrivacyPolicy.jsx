@@ -25,6 +25,27 @@ export default function PrivacyPolicy() {
                         TakeHabit
                     </h1>
                 </Link>
+                <div style={{ display: 'flex', gap: '16px', fontSize: '14px', justifyContent: 'center', marginTop: '1rem' }}>
+                    <Link to="/dashboard" style={{
+                        color: 'var(--text-muted)',
+                        fontWeight: 600,
+                        textTransform: 'uppercase',
+                        letterSpacing: '1px',
+                        textDecoration: 'none'
+                    }}>
+                        INICIO
+                    </Link>
+                    <div style={{ width: '1px', height: '14px', backgroundColor: 'var(--border)' }}></div>
+                    <Link to="/habits" style={{
+                        color: 'var(--text-muted)',
+                        fontWeight: 600,
+                        textTransform: 'uppercase',
+                        letterSpacing: '1px',
+                        textDecoration: 'none'
+                    }}>
+                        HÁBITOS
+                    </Link>
+                </div>
             </header>
 
             <main className="glass-panel" style={{
@@ -103,10 +124,10 @@ export default function PrivacyPolicy() {
                 <p>No vendemos ni alquilamos datos personales.</p>
                 <p>Podemos compartir información con proveedores tecnológicos necesarios para operar el servicio, por ejemplo:</p>
                 <ul>
-                    <li>Servicios de hosting</li>
-                    <li>Infraestructura en la nube</li>
-                    <li>herramientas de análisis</li>
-                    <li>proveedores de pago (si aplica)</li>
+                    <li>Servicios de hosting.</li>
+                    <li>Infraestructura en la nube.</li>
+                    <li>Herramientas de análisis.</li>
+                    <li>Proveedores de pago (si aplica).</li>
                 </ul>
                 <p>Estos proveedores solo procesan datos bajo nuestras instrucciones y con medidas de seguridad adecuadas.</p>
 

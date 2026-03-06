@@ -25,6 +25,27 @@ export default function TermsAndConditions() {
                         TakeHabit
                     </h1>
                 </Link>
+                <div style={{ display: 'flex', gap: '16px', fontSize: '14px', justifyContent: 'center', marginTop: '1rem' }}>
+                    <Link to="/dashboard" style={{
+                        color: 'var(--text-muted)',
+                        fontWeight: 600,
+                        textTransform: 'uppercase',
+                        letterSpacing: '1px',
+                        textDecoration: 'none'
+                    }}>
+                        INICIO
+                    </Link>
+                    <div style={{ width: '1px', height: '14px', backgroundColor: 'var(--border)' }}></div>
+                    <Link to="/habits" style={{
+                        color: 'var(--text-muted)',
+                        fontWeight: 600,
+                        textTransform: 'uppercase',
+                        letterSpacing: '1px',
+                        textDecoration: 'none'
+                    }}>
+                        HÁBITOS
+                    </Link>
+                </div>
             </header>
 
             <main className="glass-panel" style={{
@@ -49,20 +70,20 @@ export default function TermsAndConditions() {
                 <p>Para utilizar determinadas funcionalidades es necesario crear una cuenta.</p>
                 <p>El usuario se compromete a:</p>
                 <ul>
-                    <li>proporcionar información veraz</li>
-                    <li>mantener la confidencialidad de su contraseña</li>
-                    <li>no compartir su cuenta con terceros</li>
+                    <li>Proporcionar información veraz.</li>
+                    <li>Mantener la confidencialidad de su contraseña.</li>
+                    <li>No compartir su cuenta con terceros.</li>
                 </ul>
                 <p>El usuario es responsable de toda actividad realizada con su cuenta.</p>
 
                 <h3 style={{ marginTop: '2rem' }}>3. Uso Aceptable</h3>
-                <p>Los usuarios se comprometen a no utilizar la plataforma para:</p>
+                <p>Los usuarios se compromete a no utilizar la plataforma para:</p>
                 <ul>
-                    <li>actividades ilegales</li>
-                    <li>distribuir malware o software malicioso</li>
-                    <li>intentar acceder a sistemas sin autorización</li>
-                    <li>interferir con el funcionamiento del servicio</li>
-                    <li>copiar o explotar el software sin autorización</li>
+                    <li>Actividades ilegales.</li>
+                    <li>Distribuir malware o software malicioso.</li>
+                    <li>Intentar acceder a sistemas sin autorización.</li>
+                    <li>Interferir con el funcionamiento del servicio.</li>
+                    <li>Copiar o explotar el software sin autorización.</li>
                 </ul>
                 <p>Nos reservamos el derecho de suspender cuentas que incumplan estas normas.</p>
 

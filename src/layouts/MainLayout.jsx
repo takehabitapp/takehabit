@@ -1,15 +1,19 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { LogOut, User, X } from 'lucide-react';
+import { LogOut, User, X, Trash2, AlertCircle } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import Button from '../components/Button';
 
 const MainLayout = ({ children }) => {
     const navigate = useNavigate();
     const location = useLocation();
     const [showProfile, setShowProfile] = useState(false);
+    const [showModal, setShowModal] = useState(false);
+    const [modalType, setModalType] = useState('choice'); // 'choice', 'logout', 'delete'
     const profileRef = useRef(null);
     const email = localStorage.getItem('takehabit_email') || 'usuario@takehabit.com';
 
-    // Click outside to close
+    // Click outside to close profile dropdown
     useEffect(() => {
         const handleClickOutside = (event) => {
             if (profileRef.current && !profileRef.current.contains(event.target)) {
@@ -22,11 +26,117 @@ const MainLayout = ({ children }) => {
 
     const handleLogout = () => {
         localStorage.removeItem('takehabit_email');
+        setShowModal(false);
         navigate('/');
+    };
+
+    const handleDeleteAccount = () => {
+        // Here you would normally call an API to delete the account
+        localStorage.removeItem('takehabit_email');
+        setShowModal(false);
+        navigate('/');
+    };
+
+    const openModal = () => {
+        setModalType('choice');
+        setShowModal(true);
+        setShowProfile(false);
     };
 
     return (
         <div style={{ minHeight: '100vh', backgroundColor: 'var(--bg-core)', display: 'flex', flexDirection: 'column' }}>
+            {/* Modal Overlay */}
+            <AnimatePresence>
+                {showModal && (
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        style={{
+                            position: 'fixed',
+                            top: 0,
+                            left: 0,
+                            right: 0,
+                            bottom: 0,
+                            backgroundColor: 'rgba(0, 0, 0, 0.7)',
+                            backdropFilter: 'blur(8px)',
+                            zIndex: 1000,
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            padding: '24px'
+                        }}
+                        onClick={() => setShowModal(false)}
+                    >
+                        <motion.div
+                            initial={{ scale: 0.9, opacity: 0, y: 20 }}
+                            animate={{ scale: 1, opacity: 1, y: 0 }}
+                            exit={{ scale: 0.9, opacity: 0, y: 20 }}
+                            style={{
+                                backgroundColor: 'var(--bg-core)',
+                                border: '1px solid var(--border)',
+                                borderRadius: 'var(--radius-lg)',
+                                padding: '2.5rem',
+                                maxWidth: '400px',
+                                width: '100%',
+                                boxShadow: '0 20px 50px rgba(0,0,0,0.5)',
+                                textAlign: 'center'
+                            }}
+                            onClick={(e) => e.stopPropagation()}
+                        >
+                            {modalType === 'choice' && (
+                                <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+                                    <h3 style={{ fontSize: '1.5rem', marginBottom: '0.5rem', color: 'var(--text-main)' }}>Gestión de Cuenta</h3>
+                                    <Button
+                                        variant="primary"
+                                        onClick={() => setModalType('logout')}
+                                        style={{ width: '100%', display: 'flex', gap: '10px' }}
+                                    >
+                                        <LogOut size={18} /> CERRAR SESIÓN
+                                    </Button>
+                                    <Button
+                                        variant="danger"
+                                        onClick={() => setModalType('delete')}
+                                        style={{ width: '100%', display: 'flex', gap: '10px' }}
+                                    >
+                                        <Trash2 size={18} /> ELIMINAR CUENTA
+                                    </Button>
+                                    <button
+                                        onClick={() => setShowModal(false)}
+                                        style={{ color: 'var(--text-muted)', background: 'none', border: 'none', cursor: 'pointer', fontSize: '0.9rem' }}
+                                    >
+                                        CANCELAR
+                                    </button>
+                                </div>
+                            )}
+
+                            {modalType === 'logout' && (
+                                <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+                                    <AlertCircle size={48} color="var(--accent)" style={{ margin: '0 auto' }} />
+                                    <h3 style={{ fontSize: '1.5rem', color: 'var(--text-main)' }}>Quiero cerrar mi sesión</h3>
+                                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+                                        <Button variant="accent" onClick={handleLogout}>SÍ</Button>
+                                        <Button variant="primary" onClick={() => setShowModal(false)}>NO</Button>
+                                    </div>
+                                </div>
+                            )}
+
+                            {modalType === 'delete' && (
+                                <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+                                    <AlertCircle size={48} color="var(--error)" style={{ margin: '0 auto' }} />
+                                    <h3 style={{ fontSize: '1.5rem', color: 'var(--text-main)' }}>Quiere eliminar mi cuenta</h3>
+                                    <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>Esta acción es permanente y se perderán todos tus hábitos.</p>
+                                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+                                        <Button variant="danger" onClick={handleDeleteAccount}>SÍ</Button>
+                                        <Button variant="primary" onClick={() => setShowModal(false)}>NO</Button>
+                                    </div>
+                                </div>
+                            )}
+                        </motion.div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
+
             {/* Absolute Minimalist Navbar */}
             <header style={{
                 position: 'relative',
@@ -84,7 +194,7 @@ const MainLayout = ({ children }) => {
                             </div>
 
                             <button
-                                onClick={handleLogout}
+                                onClick={openModal}
                                 style={{
                                     marginTop: '0.5rem',
                                     padding: '0.75rem',
