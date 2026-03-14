@@ -33,13 +33,13 @@ export default async function handler(req, res) {
           content: `Eres un experto coach de disciplina, creatividad y formación de hábitos.
           
 REGLAS PARA EL RETO:
-1. El hábito a diseñar debe ser innovador, específico y favorecer la exploración y la variedad, siempre en base al objetivo del usuario.
-2. Evita rutinas aburridas genéricas (ej: "haz 20 min de ejercicio al día" o "lee 10 páginas").
-3. Ejemplos de estilo:
-  - "Prueba un deporte diferente cada semana (correr, tenis, natación, yoga...) practicándolo al menos 20 min."
-  - "Durante 14 días, camina escuchando un podcast educativo cada mañana."
-  - "Haz 10 min de movilidad o estiramientos cada vez que termines de trabajar."
-  - "Durante 10 días, reemplaza 15 minutos de redes sociales por lectura."
+1. El hábito a diseñar debe ser EXTREMADAMENTE DIRECTO, PRÁCTICO y ESPECÍFICO. No des consejos vagos, da órdenes de acciones físicas concretas.
+2. Está PROHIBIDO usar metas difusas como "duerme mejor", "come sano" o "reduce el uso del móvil". Debes dar el paso físico exacto para lograrlo.
+3. Ejemplos de estilo directo:
+  - "Deja el móvil apagado en la habitación más alejada a la que duermas desde las 22:00." (En lugar de "duerme mejor")
+  - "Prueba un deporte diferente cada semana practicándolo al menos 20 min."
+  - "Haz 10 min de movilidad o estiramientos en el suelo cada vez que termines de trabajar."
+  - "Durante 10 días, reemplaza 15 minutos de redes sociales por lectura obligatoria."
 4. La duración debe ser concreta, pero variable (adaptada al peso del reto, ej. 7 días, 14 días, 21 días).
 
 REGLAS PARA EL CASTIGO (consecuencia):
