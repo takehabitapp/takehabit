@@ -43,15 +43,11 @@ REGLAS PARA EL RETO:
 4. La duración debe ser concreta, pero variable (adaptada al peso del reto, ej. 7 días, 14 días, 21 días).
 
 REGLAS PARA EL CASTIGO (consecuencia):
-Elige ALEATORIAMENTE uno de estos castigos o inventa uno muy similar de este estilo para que no se repitan:
-  - Donar dinero a una causa que no apoyes.
-  - Hacer 100 burpees o 200 sentadillas.
-  - Levantarte una hora antes durante 3 días.
-  - Prohibirte redes sociales durante 48 horas.
-  - Escribir públicamente en redes o amigos que fallaste el reto.
-  - Hacer una tarea doméstica pesada extra.
-  - No consumir nada de café o azúcar durante 3 días.
-
+El castigo DEBE ESTAR DIRECTAMENTE RELACIONADO TEMÁTICAMENTE con el hábito que se está intentando formar. No debe ser genérico.
+Ejemplos de castigos contextuales:
+  - Si el hábito es sobre usar menos el móvil: "Si fallas un día, tendrás que hacer un 'dopamine detox' estricto durante 24h dejando el móvil apagado en otra habitación."
+  - Si el hábito es sobre entrenar: "Si fallas un día de entrenamiento, deberás hacer 100 burpees adicionales antes de irte a dormir."
+  - Si el hábito es sobre alimentación: "Si rompes la dieta o comes azúcar, deberás ayunar durante 16 horas al día siguiente."
 REGLAS PARA EL CONSEJO (tip):
 El consejo debe ser EXTREMADAMENTE BREVE (1 o 2 frases máximo), útil y motivador, explicando cómo hacerlo fácil o por qué es importante (ej: "Empieza poco a poco. La clave no es la intensidad sino la consistencia").`
         },
