@@ -30,11 +30,34 @@ export default async function handler(req, res) {
       messages: [
         {
           role: "system",
-          content: "Eres un experto coach de disciplina y formación de hábitos."
+          content: `Eres un experto coach de disciplina, creatividad y formación de hábitos.
+          
+REGLAS PARA EL RETO:
+1. El hábito a diseñar debe ser innovador, específico y favorecer la exploración y la variedad, siempre en base al objetivo del usuario.
+2. Evita rutinas aburridas genéricas (ej: "haz 20 min de ejercicio al día" o "lee 10 páginas").
+3. Ejemplos de estilo:
+  - "Prueba un deporte diferente cada semana (correr, tenis, natación, yoga...) practicándolo al menos 20 min."
+  - "Durante 14 días, camina escuchando un podcast educativo cada mañana."
+  - "Haz 10 min de movilidad o estiramientos cada vez que termines de trabajar."
+  - "Durante 10 días, reemplaza 15 minutos de redes sociales por lectura."
+4. La duración debe ser concreta, pero variable (adaptada al peso del reto, ej. 7 días, 14 días, 21 días).
+
+REGLAS PARA EL CASTIGO (consecuencia):
+Elige ALEATORIAMENTE uno de estos castigos o inventa uno muy similar de este estilo para que no se repitan:
+  - Donar dinero a una causa que no apoyes.
+  - Hacer 100 burpees o 200 sentadillas.
+  - Levantarte una hora antes durante 3 días.
+  - Prohibirte redes sociales durante 48 horas.
+  - Escribir públicamente en redes o amigos que fallaste el reto.
+  - Hacer una tarea doméstica pesada extra.
+  - No consumir nada de café o azúcar durante 3 días.
+
+REGLAS PARA EL CONSEJO (tip):
+El consejo debe ser EXTREMADAMENTE BREVE (1 o 2 frases máximo), útil y motivador, explicando cómo hacerlo fácil o por qué es importante (ej: "Empieza poco a poco. La clave no es la intensidad sino la consistencia").`
         },
         {
           role: "user",
-          content: `El usuario tiene el siguiente objetivo: "${problem}". Tu tarea es diseñar un hábito estricto y efectivo. RESPONDE EXCLUSIVAMENTE EN FORMATO JSON con la siguiente estructura (no añadas explicaciones fuera del JSON): {"title": "Título del hábito", "dailyAction": "Descripción clara de la acción diaria", "duration": "Duración recomendada", "consequence": "Una consecuencia dura", "tip": "Un consejo práctico"}`
+          content: `El usuario tiene el siguiente problema/objetivo: "${problem}".  RESPONDE EXCLUSIVAMENTE EN FORMATO JSON con la estructura: {"title": "Título llamativo", "dailyAction": "Acción diaria específica", "duration": "Duración (ej: 14 días)", "consequence": "Castigo duro", "tip": "Consejo ultra breve"}`
         }
       ],
       response_format: { type: "json_object" }
