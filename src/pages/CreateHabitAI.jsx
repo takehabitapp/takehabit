@@ -31,7 +31,15 @@ export default function CreateHabitAI() {
             setGeneratedHabits([result]);
         } catch (err) {
             console.error("Error generating habit:", err);
-            setError("Error al conectar con la IA. Revisa tu API Key de OpenAI.");
+            // Mostrar el mensaje de error real para diagnosticar créditos/llaves
+            const errorMessage = err.message || "Error desconocido";
+            if (errorMessage.includes("insufficient_quota")) {
+                setError("La IA no tiene créditos. Revisa tu saldo en la plataforma de OpenAI.");
+            } else if (errorMessage.includes("invalid_api_key")) {
+                setError("La API Key de OpenAI no es válida o ha sido revocada.");
+            } else {
+                setError(`Error de la IA: ${errorMessage}`);
+            }
         } finally {
             setLoading(false);
         }
