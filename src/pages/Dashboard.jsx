@@ -235,18 +235,7 @@ export default function Dashboard() {
                     </div>
                 )}
 
-                {/* Debug / Reset for MVP testing */}
-                <div style={{ marginTop: '4rem', opacity: 0.3, textAlign: 'center' }}>
-                    <button
-                        onClick={() => {
-                            localStorage.clear();
-                            window.location.reload();
-                        }}
-                        style={{ fontSize: '10px', textDecoration: 'underline' }}
-                    >
-                        [RESET APP DATA]
-                    </button>
-                </div>
+
             </div>
         </MainLayout>
     );
