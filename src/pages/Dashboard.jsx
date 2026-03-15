@@ -3,6 +3,7 @@ import MainLayout from '../layouts/MainLayout';
 import StreakCounter from '../components/StreakCounter';
 import HabitCard from '../components/HabitCard';
 import Button from '../components/Button';
+import MidnightTimer from '../components/MidnightTimer';
 import confetti from 'canvas-confetti';
 import { Link, useNavigate } from 'react-router-dom';
 
@@ -24,7 +25,21 @@ export default function Dashboard() {
             // navigate('/create-habit');
             // Let's allow empty state for better UX if they deleted everything or just arrived
         } else {
-            setHabits(storedHabits);
+            // Visual daily reset logic
+            const now = new Date();
+            const todayStr = now.toISOString().split('T')[0];
+            const storedDateStr = lastActive ? new Date(lastActive).toISOString().split('T')[0] : todayStr;
+
+            if (todayStr !== storedDateStr) {
+                // It's a new day! Visually reset frontend habits
+                const resetHabits = storedHabits.map(h => ({ ...h, completed: false }));
+                setHabits(resetHabits);
+                // Also update local storage for persistence across reloads on this new day
+                localStorage.setItem('takehabit_habits', JSON.stringify(resetHabits));
+                localStorage.setItem('takehabit_last_active', now.toISOString());
+            } else {
+                setHabits(storedHabits);
+            }
         }
 
         // Strict Streak Logic Placeholder (Simple version)
@@ -65,12 +80,21 @@ export default function Dashboard() {
 
     const allDone = habits.length > 0 && habits.every(h => h.completed);
 
+    const handleMidnightReset = () => {
+        // Run live when the timer crosses 00:00
+        const resetHabits = habits.map(h => ({ ...h, completed: false }));
+        setHabits(resetHabits);
+        localStorage.setItem('takehabit_habits', JSON.stringify(resetHabits));
+        localStorage.setItem('takehabit_last_active', new Date().toISOString());
+    };
+
     if (loading) return <MainLayout><div className="text-center p-10">Cargando...</div></MainLayout>;
 
     return (
         <MainLayout>
             <div className="animate-fade-in">
                 <StreakCounter count={streak} />
+                <MidnightTimer onMidnight={handleMidnightReset} />
 
                 {/* Section: Today's Tasks */}
                 {!allDone && (

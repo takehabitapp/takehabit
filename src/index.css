@@ -42,6 +42,20 @@
   --transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  min-height: 100vh;
+  background-color: var(--bg-core) !important;
+  overscroll-behavior: none;
+}
+
+#root {
+  min-height: 100vh;
+  background-color: var(--bg-core);
+}
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -49,14 +63,13 @@
 }
 
 body {
-  background-color: var(--bg-core);
-  background: var(--bg-gradient);
+  background-color: var(--bg-core) !important;
+  background-image: var(--bg-gradient);
   background-attachment: fixed;
   color: var(--text-main);
   font-family: var(--font-family);
   -webkit-font-smoothing: antialiased;
   line-height: 1.5;
-  min-height: 100vh;
   overflow-x: hidden;
 }
 
