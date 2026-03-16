@@ -130,62 +130,93 @@ const Onboarding = () => {
                             animate="animate"
                             exit="exit"
                             transition={{ duration: 0.4 }}
-                            style={{ textAlign: 'center' }}
+                            style={{ textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center' }}
                         >
                             <div style={{
                                 width: '100%',
-                                height: '240px',
+                                maxWidth: '320px', // Square footprint
+                                aspectRatio: '1 / 1',
                                 background: 'rgba(255, 255, 255, 0.02)',
-                                borderRadius: '40px',
-                                padding: '1.5rem 2.5rem 3.5rem 3.5rem', // More space for labels
-                                marginBottom: '2.5rem',
+                                borderRadius: '24px', // Less oval, more square-ish
+                                padding: '3rem 3rem 4rem 4rem', // Generous padding to KEEP labels inside the background
+                                marginBottom: '2rem',
                                 border: '1px solid rgba(255, 255, 255, 0.05)',
                                 display: 'flex',
                                 flexDirection: 'column',
-                                overflow: 'visible'
+                                position: 'relative',
+                                boxSizing: 'border-box'
                             }}>
-                                <div style={{ flex: 1, position: 'relative', borderLeft: '1px solid rgba(255,255,255,0.1)', borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
-                                    <svg width="100%" height="100%" viewBox="0 0 100 100" preserveAspectRatio="none" style={{ overflow: 'visible' }}>
-                                        {/* Exponential Curve Line */}
+                                <div style={{ 
+                                    flex: 1, 
+                                    position: 'relative', 
+                                    borderLeft: '2px solid rgba(255,255,255,0.15)', 
+                                    borderBottom: '2px solid rgba(255,255,255,0.15)',
+                                    display: 'flex',
+                                    justifyContent: 'center',
+                                    alignItems: 'center'
+                                }}>
+                                    <svg width="100%" height="100%" viewBox="0 0 100 100" preserveAspectRatio="none" style={{ display: 'block' }}>
+                                        {/* Exponential Curve Line (x^2) */}
                                         <motion.path
                                             d="M 0,100 Q 50,100 100,0"
                                             fill="none"
                                             stroke="var(--accent)"
-                                            strokeWidth="4"
+                                            strokeWidth="5"
                                             strokeLinecap="round"
                                             initial={{ pathLength: 0 }}
                                             animate={{ pathLength: 1 }}
                                             transition={{ duration: 2, ease: "easeInOut" }}
-                                            style={{ filter: 'drop-shadow(0 0 10px rgba(16, 185, 129, 0.4))' }}
+                                            style={{ filter: 'drop-shadow(0 0 12px rgba(16, 185, 129, 0.5))' }}
                                         />
                                         
-                                        {/* Exponential Dots (x^2) */}
-                                        {[0, 20, 40, 60, 80, 100].map((dot, i) => {
+                                        {/* Exponential Dots */}
+                                        {[0, 25, 50, 75, 100].map((dot, i) => {
                                             const x = dot;
-                                            // y = 100 - (x/100)^2 * 100
                                             const y = 100 - (Math.pow(dot / 100, 2) * 100);
                                             return (
                                                 <motion.circle
                                                     key={i}
                                                     cx={x}
                                                     cy={y}
-                                                    r="4"
+                                                    r="5"
                                                     fill="var(--accent)"
                                                     initial={{ scale: 0, opacity: 0 }}
                                                     animate={{ scale: 1, opacity: 1 }}
                                                     transition={{ delay: 0.5 + (i * 0.2), type: 'spring' }}
-                                                    style={{ filter: 'drop-shadow(0 0 5px var(--accent))' }}
+                                                    style={{ filter: 'drop-shadow(0 0 8px var(--accent))' }}
                                                 />
                                             );
                                         })}
                                     </svg>
-                                    {/* Labels integrated into the coordinate space */}
-                                    <div style={{ position: 'absolute', bottom: '-22px', right: '0', fontSize: '10px', color: 'var(--text-muted)', fontWeight: '600', letterSpacing: '0.1em' }}>TIEMPO</div>
-                                    <div style={{ position: 'absolute', left: '-35px', top: '0', transform: 'rotate(-90deg) translateX(-100%)', transformOrigin: 'left top', fontSize: '10px', color: 'var(--text-muted)', fontWeight: '600', letterSpacing: '0.1em' }}>PROGRESO</div>
+                                    
+                                    {/* Labels placed INSIDE the padded area of the square */}
+                                    <div style={{ 
+                                        position: 'absolute', 
+                                        bottom: '-30px', 
+                                        right: '0', 
+                                        fontSize: '11px', 
+                                        color: 'var(--text-muted)', 
+                                        fontWeight: '700', 
+                                        letterSpacing: '0.15em' 
+                                    }}>TIEMPO</div>
+                                    
+                                    <div style={{ 
+                                        position: 'absolute', 
+                                        left: '-45px', 
+                                        top: '0', 
+                                        transform: 'rotate(-90deg) translateX(-100%)', 
+                                        transformOrigin: 'left top', 
+                                        fontSize: '11px', 
+                                        color: 'var(--text-muted)', 
+                                        fontWeight: '700', 
+                                        letterSpacing: '0.15em',
+                                        whiteSpace: 'nowrap'
+                                    }}>PROGRESO</div>
                                 </div>
                             </div>
-                            <h1 className="text-2xl mb-4 font-bold">Pequeñas acciones, grandes resultados</h1>
-                            <p className="text-muted" style={{ fontSize: '1.1rem', lineHeight: '1.5' }}>
+                            
+                            <h2 className="text-xl mb-3 font-bold" style={{ color: 'white' }}>Pequeñas acciones, grandes resultados</h2>
+                            <p className="text-muted" style={{ fontSize: '1rem', lineHeight: '1.5', maxWidth: '300px', margin: '0 auto' }}>
                                 Las pequeñas acciones repetidas cada día generan resultados con el tiempo.
                             </p>
                         </motion.div>
