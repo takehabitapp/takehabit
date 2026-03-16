@@ -38,7 +38,7 @@ export default function Register() {
                 localStorage.setItem('takehabit_email', data.user.email);
                 // Si el registro fue exitoso, intentamos ir al dashboard
                 // (Si Supabase está configurado con Auto Confirm, data.session existirá)
-                navigate('/dashboard');
+                navigate('/onboarding');
             }
         } catch (err) {
             setError(err.message || 'Error al crear la cuenta');

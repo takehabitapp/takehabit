@@ -107,17 +107,6 @@ export default function Landing() {
                         >
                             Ya tengo cuenta
                         </Link>
-
-                        <Link to="/onboarding" style={{
-                            color: 'var(--accent)',
-                            fontSize: '1rem',
-                            textDecoration: 'none',
-                            padding: '10px',
-                            fontWeight: 'bold',
-                            opacity: 0.8
-                        }}>
-                            Ver Onboarding (Beta)
-                        </Link>
                     </div>
                 </div>
             </div>
