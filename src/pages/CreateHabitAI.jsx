@@ -1,16 +1,52 @@
 import React, { useState } from 'react';
 import MainLayout from '../layouts/MainLayout';
 import Button from '../components/Button';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { generateHabits } from '../services/ai';
 import { supabase } from '../lib/supabase';
 
 export default function CreateHabitAI() {
     const navigate = useNavigate();
-    const [prompt, setPrompt] = useState('');
+    const location = useLocation();
+    const [prompt, setPrompt] = useState(location.state?.initialPrompt || '');
     const [loading, setLoading] = useState(false);
     const [generatedHabits, setGeneratedHabits] = useState(null);
     const [error, setError] = useState(null);
+
+    React.useEffect(() => {
+        if (location.state?.autoGenerate && location.state?.initialPrompt) {
+            handleGenerateDirectly(location.state.initialPrompt);
+        }
+    }, []);
+
+    const handleGenerateDirectly = async (initialPrompt) => {
+        // Check active habits limit
+        const existing = JSON.parse(localStorage.getItem('takehabit_habits') || '[]');
+        if (existing.length >= 2) {
+            alert("Límite de disciplina alcanzado. Máximo 2 hábitos activos. Elimina uno para continuar.");
+            navigate('/dashboard');
+            return;
+        }
+
+        setError(null);
+        setLoading(true);
+        try {
+            const result = await generateHabits(initialPrompt);
+            setGeneratedHabits([result]);
+        } catch (err) {
+            console.error("Error generating habit directly:", err);
+            const errorMessage = err.message || "Error desconocido";
+            if (errorMessage.includes("insufficient_quota")) {
+                setError("La IA no tiene créditos. Revisa tu saldo en la plataforma de OpenAI.");
+            } else if (errorMessage.includes("invalid_api_key")) {
+                setError("La API Key de OpenAI no es válida o ha sido revocada.");
+            } else {
+                setError(`Error de la IA: ${errorMessage}`);
+            }
+        } finally {
+            setLoading(false);
+        }
+    };
 
     const handleGenerate = async (e) => {
         e.preventDefault();

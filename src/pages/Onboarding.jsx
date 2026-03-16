@@ -13,7 +13,23 @@ const Onboarding = () => {
         if (step < 5) {
             setStep(step + 1);
         } else {
-            navigate('/dashboard');
+            const selected = problemsToImprove.find(p => p.id === selectedProblem);
+            if (selected) {
+                if (selected.isCustom) {
+                    // Carry user to the manual generation part
+                    navigate('/create-habit');
+                } else {
+                    // Carry user and auto-start the AI diagnosis for the selected predefined habit
+                    navigate('/create-habit', { 
+                        state: { 
+                            initialPrompt: `Mi problema es: ${selected.label}. Genérame un hábito estricto para solucionarlo.`,
+                            autoGenerate: true 
+                        } 
+                    });
+                }
+            } else {
+                navigate('/dashboard');
+            }
         }
     };
 
