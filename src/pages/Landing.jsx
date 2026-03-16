@@ -94,18 +94,31 @@ export default function Landing() {
                         </Button>
                     </Link>
 
-                    <Link to="/login" style={{
-                        color: 'var(--text-muted)',
-                        fontSize: '1rem',
-                        textDecoration: 'none',
-                        padding: '10px',
-                        transition: 'color 0.2s'
-                    }}
-                        onMouseEnter={(e) => e.target.style.color = 'var(--text-main)'}
-                        onMouseLeave={(e) => e.target.style.color = 'var(--text-muted)'}
-                    >
-                        Ya tengo cuenta
-                    </Link>
+                    <div style={{ display: 'flex', gap: '2rem' }}>
+                        <Link to="/login" style={{
+                            color: 'var(--text-muted)',
+                            fontSize: '1rem',
+                            textDecoration: 'none',
+                            padding: '10px',
+                            transition: 'color 0.2s'
+                        }}
+                            onMouseEnter={(e) => e.target.style.color = 'var(--text-main)'}
+                            onMouseLeave={(e) => e.target.style.color = 'var(--text-muted)'}
+                        >
+                            Ya tengo cuenta
+                        </Link>
+
+                        <Link to="/onboarding" style={{
+                            color: 'var(--accent)',
+                            fontSize: '1rem',
+                            textDecoration: 'none',
+                            padding: '10px',
+                            fontWeight: 'bold',
+                            opacity: 0.8
+                        }}>
+                            Ver Onboarding (Beta)
+                        </Link>
+                    </div>
                 </div>
             </div>
 
