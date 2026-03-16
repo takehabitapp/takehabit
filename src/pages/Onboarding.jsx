@@ -22,7 +22,7 @@ const Onboarding = () => {
                     // Carry user and auto-start the AI diagnosis for the selected predefined habit
                     navigate('/create-habit', { 
                         state: { 
-                            initialPrompt: `Mi problema es: ${selected.label}. Genérame un hábito estricto para solucionarlo.`,
+                            initialPrompt: selected.label,
                             autoGenerate: true 
                         } 
                     });
