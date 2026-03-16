@@ -137,44 +137,51 @@ const Onboarding = () => {
                                 height: '240px',
                                 background: 'rgba(255, 255, 255, 0.02)',
                                 borderRadius: '40px',
-                                padding: '2.5rem',
+                                padding: '1.5rem 2.5rem 3.5rem 3.5rem', // More space for labels
                                 marginBottom: '2.5rem',
                                 border: '1px solid rgba(255, 255, 255, 0.05)',
                                 display: 'flex',
-                                flexDirection: 'column'
+                                flexDirection: 'column',
+                                overflow: 'visible'
                             }}>
                                 <div style={{ flex: 1, position: 'relative', borderLeft: '1px solid rgba(255,255,255,0.1)', borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
-                                    <svg width="100%" height="100%" viewBox="-10 -10 120 120" preserveAspectRatio="none">
+                                    <svg width="100%" height="100%" viewBox="0 0 100 100" preserveAspectRatio="none" style={{ overflow: 'visible' }}>
+                                        {/* Exponential Curve Line */}
                                         <motion.path
-                                            d="M 0,100 Q 25,95 50,60 T 100,0"
+                                            d="M 0,100 Q 50,100 100,0"
                                             fill="none"
                                             stroke="var(--accent)"
-                                            strokeWidth="3"
+                                            strokeWidth="4"
                                             strokeLinecap="round"
                                             initial={{ pathLength: 0 }}
                                             animate={{ pathLength: 1 }}
                                             transition={{ duration: 2, ease: "easeInOut" }}
+                                            style={{ filter: 'drop-shadow(0 0 10px rgba(16, 185, 129, 0.4))' }}
                                         />
-                                        {[0, 25, 50, 75, 100].map((dot, i) => {
+                                        
+                                        {/* Exponential Dots (x^2) */}
+                                        {[0, 20, 40, 60, 80, 100].map((dot, i) => {
                                             const x = dot;
-                                            const y = 100 - (Math.pow(dot / 100, 1.8) * 100);
+                                            // y = 100 - (x/100)^2 * 100
+                                            const y = 100 - (Math.pow(dot / 100, 2) * 100);
                                             return (
                                                 <motion.circle
                                                     key={i}
                                                     cx={x}
                                                     cy={y}
-                                                    r="3"
+                                                    r="4"
                                                     fill="var(--accent)"
-                                                    initial={{ scale: 0 }}
-                                                    animate={{ scale: 1 }}
-                                                    transition={{ delay: 0.5 + (i * 0.2) }}
-                                                    style={{ filter: 'drop-shadow(0 0 8px var(--accent))' }}
+                                                    initial={{ scale: 0, opacity: 0 }}
+                                                    animate={{ scale: 1, opacity: 1 }}
+                                                    transition={{ delay: 0.5 + (i * 0.2), type: 'spring' }}
+                                                    style={{ filter: 'drop-shadow(0 0 5px var(--accent))' }}
                                                 />
                                             );
                                         })}
                                     </svg>
-                                    <div style={{ position: 'absolute', bottom: '-25px', right: '0', fontSize: '10px', color: 'var(--text-muted)', letterSpacing: '0.1em' }}>DÍAS</div>
-                                    <div style={{ position: 'absolute', left: '-35px', top: '0', transform: 'rotate(-90deg) translateX(-100%)', transformOrigin: 'left top', fontSize: '10px', color: 'var(--text-muted)', letterSpacing: '0.1em' }}>PROGRESO</div>
+                                    {/* Labels integrated into the coordinate space */}
+                                    <div style={{ position: 'absolute', bottom: '-22px', right: '0', fontSize: '10px', color: 'var(--text-muted)', fontWeight: '600', letterSpacing: '0.1em' }}>TIEMPO</div>
+                                    <div style={{ position: 'absolute', left: '-35px', top: '0', transform: 'rotate(-90deg) translateX(-100%)', transformOrigin: 'left top', fontSize: '10px', color: 'var(--text-muted)', fontWeight: '600', letterSpacing: '0.1em' }}>PROGRESO</div>
                                 </div>
                             </div>
                             <h1 className="text-2xl mb-4 font-bold">Pequeñas acciones, grandes resultados</h1>
