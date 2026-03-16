@@ -6,7 +6,7 @@ import Button from '../components/Button';
 
 const Onboarding = () => {
     const [step, setStep] = useState(1);
-    const [selectedHabit, setSelectedHabit] = useState(null);
+    const [selectedProblem, setSelectedProblem] = useState(null);
     const navigate = useNavigate();
 
     const nextStep = () => {
@@ -17,84 +17,76 @@ const Onboarding = () => {
         }
     };
 
-    const progress = `${step}/5`;
-
-    const habitSuggestions = [
-        { id: 1, label: 'Beber un vaso de agua', icon: <Droplets size={18} /> },
-        { id: 2, label: 'Leer 2 páginas', icon: <BookOpen size={18} /> },
-        { id: 3, label: 'Caminar 5 minutos', icon: <Footprints size={18} /> },
-        { id: 4, label: 'Meditar 1 minuto', icon: <Timer size={18} /> },
-        { id: 5, label: 'Crear hábito personalizado', icon: <Plus size={18} /> },
+    const problemsToImprove = [
+        { id: 1, label: 'Uso demasiado el móvil' },
+        { id: 2, label: 'No hago suficiente deporte' },
+        { id: 3, label: 'Me cuesta concentrarme' },
+        { id: 4, label: 'Leo muy poco' },
+        { id: 5, label: 'Me cuesta mantener rutinas' },
+        { id: 6, label: 'Generar hábito personalizado', isCustom: true },
     ];
 
     const containerVariants = {
-        initial: { opacity: 0, scale: 0.95, y: 10 },
+        initial: { opacity: 0, scale: 0.98, y: 10 },
         animate: { opacity: 1, scale: 1, y: 0 },
-        exit: { opacity: 0, scale: 1.05, y: -10 },
+        exit: { opacity: 0, scale: 1.02, y: -10 },
+    };
+
+    // Style constants for reuse
+    const titleStyle = {
+        fontSize: 'clamp(2.5rem, 8vw, 3.5rem)',
+        lineHeight: '0.9',
+        letterSpacing: '-0.05em',
+        background: 'linear-gradient(180deg, #FFFFFF 0%, #A0A0A0 100%)',
+        WebkitBackgroundClip: 'text',
+        WebkitTextFillColor: 'transparent',
+        textAlign: 'center',
+        fontFamily: 'var(--font-display)',
+        fontWeight: '800',
+        textTransform: 'uppercase',
+        margin: '0 auto'
+    };
+
+    // Full screen container that blends with the app's core design
+    const mainContainerStyle = {
+        minHeight: '100vh',
+        display: 'flex',
+        flexDirection: 'column',
+        backgroundColor: 'var(--bg-core)',
+        backgroundImage: 'var(--bg-gradient)',
+        color: 'var(--text-main)',
+        padding: 'var(--spacing-lg)',
+        maxWidth: '500px',
+        margin: '0 auto',
+        position: 'relative',
+        overflow: 'hidden',
+    };
+
+    const contentWrapperStyle = {
+        flex: 1,
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        width: '100%',
+        maxWidth: '420px',
+        margin: '0 auto',
+        padding: '2rem 1rem',
+        backgroundColor: 'transparent', // Unified background as requested
     };
 
     return (
-        <div style={{
-            minHeight: '100vh',
-            display: 'flex',
-            flexDirection: 'column',
-            backgroundColor: 'var(--bg-core)',
-            backgroundImage: 'var(--bg-gradient)',
-            color: 'var(--text-main)',
-            padding: 'var(--spacing-lg)',
-            maxWidth: '500px',
-            margin: '0 auto',
-            position: 'relative',
-            overflow: 'hidden'
-        }}>
+        <div style={mainContainerStyle}>
             {/* Top Section */}
             <div style={{
                 textAlign: 'center',
-                paddingTop: 'var(--spacing-md)',
+                paddingTop: '3rem',
                 marginBottom: 'var(--spacing-xl)',
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                gap: '1.5rem'
             }}>
-                <h2 style={{
-                    fontSize: '1rem',
-                    letterSpacing: '0.3em',
-                    color: 'var(--text-main)',
-                    fontWeight: '800',
-                    textTransform: 'uppercase',
-                    margin: 0
-                }}>TAKEHABIT</h2>
-
-                <div style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px' }}>
-                    <div style={{ fontSize: '0.8rem', fontWeight: 'bold', color: 'var(--accent)', letterSpacing: '0.1em' }}>
-                        {progress}
-                    </div>
-                    {/* Progress Bar Container */}
-                    <div style={{
-                        width: '100%',
-                        height: '4px',
-                        backgroundColor: 'rgba(255, 255, 255, 0.05)',
-                        borderRadius: '2px',
-                        overflow: 'hidden',
-                        maxWidth: '200px'
-                    }}>
-                        <motion.div
-                            initial={{ width: 0 }}
-                            animate={{ width: `${(step / 5) * 100}%` }}
-                            transition={{ duration: 0.5, ease: "easeOut" }}
-                            style={{
-                                height: '100%',
-                                background: 'linear-gradient(90deg, var(--accent) 0%, #34D399 100%)',
-                                boxShadow: '0 0 10px var(--accent-glow)'
-                            }}
-                        />
-                    </div>
-                </div>
+                <h2 style={titleStyle}>TAKEHABIT</h2>
             </div>
 
             {/* Middle Content */}
-            <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+            <div style={contentWrapperStyle}>
                 <AnimatePresence mode="wait">
                     {step === 1 && (
                         <motion.div
@@ -103,58 +95,28 @@ const Onboarding = () => {
                             initial="initial"
                             animate="animate"
                             exit="exit"
-                            transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+                            transition={{ duration: 0.4 }}
                             style={{ textAlign: 'center' }}
                         >
                             <div style={{
-                                width: '240px',
-                                height: '240px',
-                                margin: '0 auto 2.5rem',
+                                width: '100%',
                                 display: 'flex',
                                 justifyContent: 'center',
-                                alignItems: 'center',
-                                backgroundColor: 'var(--glass-bg)',
-                                borderRadius: 'var(--radius-lg)',
-                                border: '1px solid var(--glass-border)',
-                                position: 'relative',
-                                boxShadow: '0 20px 40px rgba(0,0,0,0.3)',
-                                overflow: 'hidden'
+                                gap: '2rem',
+                                marginBottom: '3rem'
                             }}>
-                                <div style={{
-                                    position: 'absolute',
-                                    width: '150%',
-                                    height: '150%',
-                                    background: 'radial-gradient(circle, var(--accent-glow) 0%, transparent 70%)',
-                                    opacity: 0.3,
-                                    zIndex: 0
-                                }} />
-
-                                <div style={{ display: 'flex', gap: '24px', zIndex: 1, alignItems: 'flex-end' }}>
-                                    <motion.div
-                                        animate={{ y: [0, -15, 0] }}
-                                        transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                                        style={{ backgroundColor: 'rgba(255,255,255,0.05)', padding: '16px', borderRadius: '16px', border: '1px solid rgba(255,255,255,0.1)' }}
-                                    >
-                                        <Droplets size={32} color="var(--accent)" />
-                                    </motion.div>
-                                    <motion.div
-                                        animate={{ y: [0, 15, 0] }}
-                                        transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
-                                        style={{ backgroundColor: 'rgba(255,255,255,0.05)', padding: '20px', borderRadius: '16px', border: '1px solid rgba(255,255,255,0.1)', transform: 'translateY(-20px)' }}
-                                    >
-                                        <BookOpen size={40} color="var(--accent)" />
-                                    </motion.div>
-                                    <motion.div
-                                        animate={{ y: [0, -10, 0] }}
-                                        transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-                                        style={{ backgroundColor: 'rgba(255,255,255,0.05)', padding: '16px', borderRadius: '16px', border: '1px solid rgba(255,255,255,0.1)' }}
-                                    >
-                                        <Footprints size={32} color="var(--accent)" />
-                                    </motion.div>
-                                </div>
+                                <motion.div animate={{ y: [0, -15, 0] }} transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}>
+                                    <Droplets size={50} color="var(--accent)" style={{ filter: 'drop-shadow(0 0 10px var(--accent-glow))' }} />
+                                </motion.div>
+                                <motion.div animate={{ y: [0, 15, 0] }} transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}>
+                                    <BookOpen size={60} color="var(--accent)" style={{ filter: 'drop-shadow(0 0 10px var(--accent-glow))' }} />
+                                </motion.div>
+                                <motion.div animate={{ y: [0, -10, 0] }} transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 1 }}>
+                                    <Footprints size={50} color="var(--accent)" style={{ filter: 'drop-shadow(0 0 10px var(--accent-glow))' }} />
+                                </motion.div>
                             </div>
-                            <h1 className="text-2xl mb-4" style={{ letterSpacing: '-0.02em' }}>Todo empieza pequeño</h1>
-                            <p className="text-muted" style={{ fontSize: '1.1rem', lineHeight: '1.5', maxWidth: '300px', margin: '0 auto' }}>
+                            <h1 className="text-2xl mb-4 font-bold">Todo empieza pequeño</h1>
+                            <p className="text-muted" style={{ fontSize: '1.1rem', lineHeight: '1.6' }}>
                                 Los grandes cambios en la vida suelen comenzar con pequeñas acciones repetidas cada día.
                             </p>
                         </motion.div>
@@ -167,76 +129,58 @@ const Onboarding = () => {
                             initial="initial"
                             animate="animate"
                             exit="exit"
-                            transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+                            transition={{ duration: 0.4 }}
                             style={{ textAlign: 'center' }}
                         >
-                            <div className="glass-panel" style={{
+                            <div style={{
                                 width: '100%',
-                                height: '260px',
-                                margin: '0 auto 2.5rem',
-                                padding: '2rem',
-                                position: 'relative',
+                                height: '240px',
+                                background: 'rgba(255, 255, 255, 0.02)',
+                                borderRadius: '40px',
+                                padding: '2.5rem',
+                                marginBottom: '2.5rem',
+                                border: '1px solid rgba(255, 255, 255, 0.05)',
                                 display: 'flex',
-                                flexDirection: 'column',
-                                overflow: 'hidden'
+                                flexDirection: 'column'
                             }}>
                                 <div style={{ flex: 1, position: 'relative', borderLeft: '1px solid rgba(255,255,255,0.1)', borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
-                                    <svg width="100%" height="100%" viewBox="0 0 100 100" preserveAspectRatio="none">
-                                        <defs>
-                                            <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                                                <stop offset="0%" stopColor="rgba(16, 185, 129, 0.1)" />
-                                                <stop offset="100%" stopColor="var(--accent)" />
-                                            </linearGradient>
-                                            <linearGradient id="areaGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-                                                <stop offset="0%" stopColor="var(--accent-glow)" />
-                                                <stop offset="100%" stopColor="transparent" />
-                                            </linearGradient>
-                                        </defs>
-
-                                        {/* Area under the path */}
+                                    <svg width="100%" height="100%" viewBox="-10 -10 120 120" preserveAspectRatio="none">
                                         <motion.path
-                                            d="M 0,90 Q 25,85 50,60 T 100,10 L 100,90 L 0,90 Z"
-                                            fill="url(#areaGradient)"
-                                            initial={{ opacity: 0 }}
-                                            animate={{ opacity: 0.3 }}
-                                            transition={{ delay: 0.5, duration: 1 }}
-                                        />
-
-                                        <motion.path
-                                            d="M 0,90 Q 25,85 50,60 T 100,10"
+                                            d="M 0,100 Q 25,95 50,60 T 100,0"
                                             fill="none"
-                                            stroke="url(#gradient)"
+                                            stroke="var(--accent)"
                                             strokeWidth="3"
                                             strokeLinecap="round"
                                             initial={{ pathLength: 0 }}
                                             animate={{ pathLength: 1 }}
                                             transition={{ duration: 2, ease: "easeInOut" }}
                                         />
-
-                                        {[0, 20, 40, 60, 80, 100].map((dot, i) => {
+                                        {[0, 25, 50, 75, 100].map((dot, i) => {
                                             const x = dot;
-                                            const y = 90 - (Math.pow(dot / 100, 1.8) * 80);
+                                            const y = 100 - (Math.pow(dot / 100, 1.8) * 100);
                                             return (
                                                 <motion.circle
                                                     key={i}
                                                     cx={x}
                                                     cy={y}
-                                                    r="2.5"
+                                                    r="3"
                                                     fill="var(--accent)"
                                                     initial={{ scale: 0 }}
                                                     animate={{ scale: 1 }}
                                                     transition={{ delay: 0.5 + (i * 0.2) }}
-                                                    style={{ filter: 'drop-shadow(0 0 5px var(--accent))' }}
+                                                    style={{ filter: 'drop-shadow(0 0 8px var(--accent))' }}
                                                 />
                                             );
                                         })}
                                     </svg>
-                                    <div style={{ position: 'absolute', bottom: '-25px', right: '0', fontSize: '10px', color: 'var(--text-muted)', letterSpacing: '0.1em' }}>DÍAS / ACCIONES</div>
-                                    <div style={{ position: 'absolute', left: '-40px', top: '0', transform: 'rotate(-90deg) translateX(-100%)', transformOrigin: 'left top', fontSize: '10px', color: 'var(--text-muted)', letterSpacing: '0.1em' }}>PROGRESO</div>
+                                    <div style={{ position: 'absolute', bottom: '-25px', right: '0', fontSize: '10px', color: 'var(--text-muted)', letterSpacing: '0.1em' }}>DÍAS</div>
+                                    <div style={{ position: 'absolute', left: '-35px', top: '0', transform: 'rotate(-90deg) translateX(-100%)', transformOrigin: 'left top', fontSize: '10px', color: 'var(--text-muted)', letterSpacing: '0.1em' }}>PROGRESO</div>
                                 </div>
                             </div>
-                            <h1 className="text-2xl mb-4">Pequeñas acciones, grandes resultados</h1>
-                            <p className="text-muted" style={{ fontSize: '1.1rem', lineHeight: '1.5' }}>Las pequeñas acciones repetidas cada día generan resultados con el tiempo.</p>
+                            <h1 className="text-2xl mb-4 font-bold">Pequeñas acciones, grandes resultados</h1>
+                            <p className="text-muted" style={{ fontSize: '1.1rem', lineHeight: '1.5' }}>
+                                Las pequeñas acciones repetidas cada día generan resultados con el tiempo.
+                            </p>
                         </motion.div>
                     )}
 
@@ -247,70 +191,30 @@ const Onboarding = () => {
                             initial="initial"
                             animate="animate"
                             exit="exit"
-                            transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+                            transition={{ duration: 0.4 }}
                             style={{ textAlign: 'center' }}
                         >
                             <div style={{
-                                width: '100%',
-                                margin: '0 auto 2.5rem',
                                 display: 'flex',
                                 flexDirection: 'column',
                                 alignItems: 'center',
-                                gap: '0.8rem'
+                                gap: '0.8rem',
+                                marginBottom: '2.5rem'
                             }}>
-                                <motion.div
-                                    initial={{ scale: 0.9, opacity: 0 }}
-                                    animate={{ scale: 1, opacity: 1 }}
-                                    transition={{ delay: 0.1 }}
-                                    className="glass-panel"
-                                    style={{ padding: '1rem 2rem', borderRadius: 'var(--radius-md)', width: '220px', border: '1px solid rgba(255,255,255,0.05)' }}
-                                >
-                                    <div style={{ color: 'var(--accent)', fontWeight: '800', fontSize: '1rem', letterSpacing: '0.05em' }}>ACCIÓN PEQUEÑA</div>
-                                </motion.div>
-
-                                <motion.div initial={{ height: 0 }} animate={{ height: 24 }} transition={{ delay: 0.3 }}>
-                                    <ArrowRight style={{ transform: 'rotate(90deg)' }} color="var(--text-muted)" size={20} />
-                                </motion.div>
-
-                                <motion.div
-                                    initial={{ scale: 0.9, opacity: 0 }}
-                                    animate={{ scale: 1, opacity: 1 }}
-                                    transition={{ delay: 0.5 }}
-                                    className="glass-panel"
-                                    style={{ padding: '1rem 2rem', borderRadius: 'var(--radius-md)', width: '220px', border: '1px solid rgba(255,255,255,0.05)' }}
-                                >
-                                    <div style={{ color: 'var(--accent)', fontWeight: '800', fontSize: '1rem', letterSpacing: '0.05em' }}>REPETICIÓN</div>
-                                </motion.div>
-
-                                <motion.div initial={{ height: 0 }} animate={{ height: 24 }} transition={{ delay: 0.7 }}>
-                                    <ArrowRight style={{ transform: 'rotate(90deg)' }} color="var(--text-muted)" size={20} />
-                                </motion.div>
-
-                                <motion.div
-                                    initial={{ scale: 0.9, opacity: 0 }}
-                                    animate={{ scale: 1, opacity: 1 }}
-                                    transition={{ delay: 0.9 }}
-                                    className="glass-panel"
-                                    style={{ padding: '1rem 2rem', borderRadius: 'var(--radius-md)', width: '220px', border: '1px solid rgba(255,255,255,0.05)' }}
-                                >
-                                    <div style={{ color: 'var(--accent)', fontWeight: '800', fontSize: '1rem', letterSpacing: '0.05em' }}>HÁBITO</div>
-                                </motion.div>
-
-                                <motion.div initial={{ height: 0 }} animate={{ height: 24 }} transition={{ delay: 1.1 }}>
-                                    <ArrowRight style={{ transform: 'rotate(90deg)' }} color="var(--text-muted)" size={20} />
-                                </motion.div>
-
-                                <motion.div
-                                    initial={{ scale: 0.9, opacity: 0 }}
-                                    animate={{ scale: 1, opacity: 1 }}
-                                    transition={{ delay: 1.3 }}
-                                    className="glass-panel"
-                                    style={{ padding: '1rem 2rem', borderRadius: 'var(--radius-md)', width: '220px', background: 'var(--accent)', border: 'none', boxShadow: '0 0 20px var(--accent-glow)' }}
-                                >
-                                    <div style={{ color: 'white', fontWeight: '900', fontSize: '1.1rem', letterSpacing: '0.05em' }}>RESULTADOS</div>
-                                </motion.div>
+                                {['Acción pequeña', 'Repetición', 'Hábito'].map((text, i) => (
+                                    <React.Fragment key={text}>
+                                        <div className="glass-panel" style={{ padding: '1rem 2rem', borderRadius: '24px', width: '220px', border: '1px solid rgba(255,255,255,0.08)' }}>
+                                            <div style={{ color: 'var(--accent)', fontWeight: '700', letterSpacing: '0.05em', fontSize: '0.9rem' }}>{text.toUpperCase()}</div>
+                                        </div>
+                                        {i < 2 && <ArrowRight style={{ transform: 'rotate(90deg)', opacity: 0.3 }} color="var(--text-muted)" size={20} />}
+                                    </React.Fragment>
+                                ))}
+                                <ArrowRight style={{ transform: 'rotate(90deg)', opacity: 0.3 }} color="var(--text-muted)" size={20} />
+                                <div className="glass-panel" style={{ padding: '1.2rem 2rem', borderRadius: '24px', width: '220px', backgroundColor: 'var(--accent)', border: 'none', boxShadow: '0 0 20px var(--accent-glow)' }}>
+                                    <div style={{ color: 'white', fontWeight: '900', letterSpacing: '0.05em', fontSize: '1.1rem' }}>RESULTADOS</div>
+                                </div>
                             </div>
-                            <h1 className="text-2xl mb-4">Tu cerebro ama los hábitos pequeños</h1>
+                            <h1 className="text-2xl mb-4 font-bold">Tu cerebro ama los hábitos pequeños</h1>
                             <p className="text-muted" style={{ fontSize: '1.1rem', lineHeight: '1.6' }}>
                                 Cuando una acción es fácil, es más probable que la repitas.<br />
                                 <strong>La repetición convierte las acciones en hábitos.</strong>
@@ -325,53 +229,44 @@ const Onboarding = () => {
                             initial="initial"
                             animate="animate"
                             exit="exit"
-                            transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+                            transition={{ duration: 0.4 }}
                             style={{ textAlign: 'center' }}
                         >
                             <div className="glass-panel" style={{
-                                width: '100%',
-                                margin: '0 auto 2.5rem',
-                                padding: '2rem',
+                                padding: '2.5rem',
+                                borderRadius: '40px',
                                 textAlign: 'left',
                                 display: 'flex',
                                 flexDirection: 'column',
-                                gap: '1.2rem',
-                                border: '1px solid rgba(255,255,255,0.05)',
-                                background: 'rgba(255,255,255,0.02)'
+                                gap: '1.5rem',
+                                marginBottom: '2.5rem',
+                                background: 'rgba(255, 255, 255, 0.03)'
                             }}>
-                                <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-                                    <motion.div
-                                        initial={{ scale: 0, opacity: 0 }}
-                                        animate={{ scale: 1, opacity: 1 }}
-                                        transition={{ delay: 0.5, type: 'spring', damping: 12 }}
-                                        style={{ width: '28px', height: '28px', borderRadius: '8px', backgroundColor: 'var(--accent)', display: 'flex', justifyContent: 'center', alignItems: 'center', boxShadow: '0 0 10px var(--accent-glow)' }}
-                                    >
-                                        <Check size={18} color="white" strokeWidth={4} />
-                                    </motion.div>
-                                    <span style={{ color: 'white', fontSize: '1.1rem', fontWeight: '500' }}>Beber agua</span>
-                                </div>
-                                <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-                                    <motion.div
-                                        initial={{ scale: 0, opacity: 0 }}
-                                        animate={{ scale: 1, opacity: 1 }}
-                                        transition={{ delay: 0.8, type: 'spring', damping: 12 }}
-                                        style={{ width: '28px', height: '28px', borderRadius: '8px', backgroundColor: 'var(--accent)', display: 'flex', justifyContent: 'center', alignItems: 'center', boxShadow: '0 0 10px var(--accent-glow)' }}
-                                    >
-                                        <Check size={18} color="white" strokeWidth={4} />
-                                    </motion.div>
-                                    <span style={{ color: 'white', fontSize: '1.1rem', fontWeight: '500' }}>Leer 2 páginas</span>
-                                </div>
-                                <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-                                    <div style={{ width: '28px', height: '28px', borderRadius: '8px', border: '2px solid rgba(255,255,255,0.1)', background: 'rgba(255,255,255,0.03)' }}></div>
-                                    <span style={{ color: 'var(--text-muted)', fontSize: '1.1rem' }}>Caminar 5 minutos</span>
-                                </div>
-                                <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-                                    <div style={{ width: '28px', height: '28px', borderRadius: '8px', border: '2px solid rgba(255,255,255,0.1)', background: 'rgba(255,255,255,0.03)' }}></div>
-                                    <span style={{ color: 'var(--text-muted)', fontSize: '1.1rem' }}>Meditar 1 minuto</span>
-                                </div>
+                                {[
+                                    { text: 'Beber agua', checked: true, delay: 0.2 },
+                                    { text: 'Leer 2 páginas', checked: true, delay: 0.4 },
+                                    { text: 'Caminar 5 minutos', checked: false },
+                                    { text: 'Meditar 1 minuto', checked: false }
+                                ].map((item, i) => (
+                                    <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                                        {item.checked ? (
+                                            <motion.div
+                                                initial={{ scale: 0 }}
+                                                animate={{ scale: 1 }}
+                                                transition={{ delay: item.delay, type: 'spring' }}
+                                                style={{ width: '28px', height: '28px', borderRadius: '8px', backgroundColor: 'var(--accent)', display: 'flex', justifyContent: 'center', alignItems: 'center' }}
+                                            >
+                                                <Check size={18} color="white" strokeWidth={4} />
+                                            </motion.div>
+                                        ) : (
+                                            <div style={{ width: '28px', height: '28px', borderRadius: '8px', border: '2px solid rgba(255,255,255,0.1)' }} />
+                                        )}
+                                        <span style={{ color: item.checked ? 'white' : 'var(--text-muted)', fontSize: '1.1rem', fontWeight: item.checked ? '600' : '400' }}>{item.text}</span>
+                                    </div>
+                                ))}
                             </div>
-                            <h1 className="text-2xl mb-4">Para eso existe TAKEHABIT</h1>
-                            <p className="text-muted" style={{ fontSize: '1.1rem', lineHeight: '1.5' }}>Crea micro-hábitos simples que puedas completar cada día.</p>
+                            <h1 className="text-2xl mb-4 font-bold">Para eso existe TAKEHABIT</h1>
+                            <p className="text-muted" style={{ fontSize: '1.1rem', lineHeight: '1.6' }}>Crea micro-hábitos simples que puedas completar cada día.</p>
                         </motion.div>
                     )}
 
@@ -382,56 +277,56 @@ const Onboarding = () => {
                             initial="initial"
                             animate="animate"
                             exit="exit"
-                            transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+                            transition={{ duration: 0.4 }}
                             style={{ textAlign: 'center' }}
                         >
-                            <h1 className="text-2xl mb-4">Empieza tu primer micro-hábito</h1>
-                            <p className="text-muted mb-8" style={{ fontSize: '1.1rem' }}>Elige algo pequeño que puedas hacer hoy.</p>
+                            <h1 className="text-2xl mb-4 font-bold">Empieza tu primer micro-hábito</h1>
+                            <p className="text-muted" style={{ fontSize: '1.1rem', marginBottom: '32px' }}>
+                                Elige algo pequeño que puedas mejorar hoy.
+                            </p>
 
                             <div style={{
                                 display: 'flex',
                                 flexDirection: 'column',
                                 gap: '0.8rem',
-                                marginBottom: '2.5rem'
+                                width: '100%',
                             }}>
-                                {habitSuggestions.map((habit) => (
+                                {problemsToImprove.map((problem) => (
                                     <motion.div
-                                        key={habit.id}
-                                        whileHover={{ x: 5, backgroundColor: 'rgba(255,255,255,0.06)' }}
+                                        key={problem.id}
+                                        whileHover={{ x: 5 }}
                                         whileTap={{ scale: 0.98 }}
-                                        onClick={() => setSelectedHabit(habit.id)}
+                                        onClick={() => setSelectedProblem(problem.id)}
                                         style={{
                                             padding: '1.2rem 1.5rem',
-                                            borderRadius: 'var(--radius-md)',
+                                            borderRadius: '24px',
                                             border: '1px solid',
-                                            borderColor: selectedHabit === habit.id ? 'var(--accent)' : 'rgba(255,255,255,0.05)',
-                                            backgroundColor: selectedHabit === habit.id ? 'rgba(16, 185, 129, 0.15)' : 'rgba(255,255,255,0.03)',
-                                            color: selectedHabit === habit.id ? 'white' : 'var(--text-main)',
+                                            borderColor: selectedProblem === problem.id ? 'var(--accent)' : 'rgba(255,255,255,0.08)',
+                                            backgroundColor: selectedProblem === problem.id ? 'rgba(16, 185, 129, 0.12)' : 'rgba(255, 255, 255, 0.02)',
+                                            color: selectedProblem === problem.id ? 'white' : 'var(--text-main)',
                                             display: 'flex',
                                             alignItems: 'center',
                                             justifyContent: 'space-between',
                                             cursor: 'pointer',
-                                            transition: 'border-color 0.3s ease, background-color 0.3s ease'
+                                            transition: 'all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1)',
                                         }}
                                     >
-                                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.8rem' }}>
-                                            <span style={{ color: selectedHabit === habit.id ? 'var(--accent)' : 'var(--text-muted)' }}>
-                                                {habit.icon}
-                                            </span>
-                                            <span style={{ fontWeight: selectedHabit === habit.id ? '700' : '400' }}>{habit.label}</span>
-                                        </div>
+                                        <span style={{ fontWeight: selectedProblem === problem.id ? '700' : '400', color: problem.isCustom ? 'var(--accent)' : 'inherit' }}>
+                                            {problem.label}
+                                        </span>
                                         <div style={{
                                             width: '20px',
                                             height: '20px',
                                             borderRadius: '50%',
                                             border: '2px solid',
-                                            borderColor: selectedHabit === habit.id ? 'var(--accent)' : 'rgba(255,255,255,0.2)',
+                                            borderColor: selectedProblem === problem.id ? 'var(--accent)' : 'rgba(255,255,255,0.2)',
                                             display: 'flex',
                                             justifyContent: 'center',
                                             alignItems: 'center',
-                                            backgroundColor: selectedHabit === habit.id ? 'var(--accent)' : 'transparent'
+                                            backgroundColor: selectedProblem === problem.id ? 'var(--accent)' : 'transparent',
+                                            transition: 'all 0.3s ease'
                                         }}>
-                                            {selectedHabit === habit.id && <Check size={12} color="white" strokeWidth={4} />}
+                                            {selectedProblem === problem.id && <Check size={12} color="white" strokeWidth={4} />}
                                         </div>
                                     </motion.div>
                                 ))}
@@ -447,46 +342,44 @@ const Onboarding = () => {
                 display: 'flex',
                 flexDirection: 'column',
                 gap: '1rem',
-                paddingBottom: 'var(--spacing-md)'
+                paddingBottom: '3rem'
             }}>
                 <Button
                     onClick={nextStep}
+                    disabled={step === 5 && !selectedProblem}
                     variant="accent"
                     style={{
                         width: '100%',
-                        padding: '20px',
+                        padding: '1.2rem',
                         fontSize: '1.1rem',
                         fontWeight: '800',
-                        backgroundColor: 'var(--accent)',
-                        color: 'white',
+                        backgroundColor: step === 5 && !selectedProblem ? 'rgba(255, 255, 255, 0.05)' : 'var(--accent)',
+                        color: step === 5 && !selectedProblem ? 'var(--text-muted)' : 'white',
                         border: 'none',
-                        borderRadius: 'var(--radius-md)',
-                        boxShadow: step === 5 ? '0 10px 30px var(--accent-glow)' : '0 10px 20px rgba(0,0,0,0.2)',
-                        letterSpacing: '0.05em'
+                        borderRadius: '24px',
+                        boxShadow: step === 5 && !selectedProblem ? 'none' : '0 10px 30px rgba(16, 185, 129, 0.3)',
+                        letterSpacing: '0.05em',
+                        textTransform: 'uppercase',
+                        opacity: step === 5 && !selectedProblem ? 0.5 : 1,
+                        transition: 'all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1)'
                     }}
                 >
-                    {step === 5 ? 'CREAR MI PRIMER HÁBITO' : 'CONTINUAR'}
+                    {step === 5 ? 'Continuar' : 'Continuar'}
                 </Button>
 
                 {step === 5 && (
-                    <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
+                    <Button
+                        onClick={() => navigate('/dashboard')}
+                        variant="ghost"
+                        style={{
+                            width: '100%',
+                            color: 'var(--text-muted)',
+                            padding: '0.5rem',
+                            fontWeight: '600'
+                        }}
                     >
-                        <Button
-                            onClick={() => navigate('/dashboard')}
-                            variant="ghost"
-                            style={{
-                                width: '100%',
-                                color: 'var(--text-muted)',
-                                padding: '10px',
-                                fontWeight: '500',
-                                fontSize: '0.9rem'
-                            }}
-                        >
-                            Inicio
-                        </Button>
-                    </motion.div>
+                        Inicio
+                    </Button>
                 )}
             </div>
         </div>
