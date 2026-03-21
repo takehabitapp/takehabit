@@ -28,7 +28,7 @@ const StreakCounter = ({ count }) => {
                     textAlign: 'center'
                 }}
             >
-                Días seguidos
+                Días completados
             </div>
         </div>
     );

@@ -72,7 +72,8 @@ export default function Landing() {
                     maxWidth: '450px',
                     lineHeight: '1.6'
                 }}>
-                    Construye disciplina. Empieza de cero. <br />
+                    La aplicación definitiva para crear y mantener hábitos saludables.<br />
+                    Construye disciplina y sigue tu progreso diario de forma sencilla.<br />
                     <span style={{ color: 'var(--accent)' }}>Sin excusas.</span>
                 </p>
 
